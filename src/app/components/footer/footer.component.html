@@ -1,0 +1,22 @@
+<footer class="w-100 p-3 ">
+<div class="container text-center pt-4">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="mouse-pointer" [routerLink]="router.url.includes('admin') ? '/admin/contactUs':'/contactUs'">Contact Us</div>
+    </div>
+    <div class="col-md-2">
+      <div class="mouse-pointer" [routerLink]="router.url.includes('admin') ? '/admin/faq':'/faq'">FAQ</div>
+    </div>
+    <div class="col-md-3">
+      <div class="mouse-pointer" [routerLink]="router.url.includes('admin') ? '/admin/T&C':'/T&C'">Terms and Conditions</div>
+    </div>
+    <div class="col-md-5">
+      <div class="mouse-pointer">Follow Us On
+      <img class="icon mouse-pointer mx-2" src="../../../assets/icons/fb.svg" alt="">
+      <img class="icon mouse-pointer mx-2" src="../../../assets/icons/instagram.svg" alt="">
+      <img class="icon mouse-pointer mx-2" src="../../../assets/icons/twitter.svg" alt="">
+      </div>
+    </div>
+  </div>
+</div>
+</footer>

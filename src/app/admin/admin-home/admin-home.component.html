@@ -1,0 +1,85 @@
+<div class="card m-2 p-4">
+  <form [formGroup]="graphDateForm">
+    <div class="row">
+      <div class="col-5">
+        <h2 class="fw-bold">Overview</h2>
+      </div>
+      <div class="col-3">
+        <div class="form-group">
+          <label for="">Select Month and Year</label>
+          <input formControlName="month" class="form-control" type="month" />
+        </div>
+      </div>
+      <span class="col-1 m-auto text-center fw-bold">OR</span>
+      <div class="col-3">
+        <div class="form-group">
+          <label for="">Select Year</label>
+          <select formControlName="year" class="form-control"  >
+            <option *ngFor="let year of yearsList" [value]="year">{{year}}</option>
+          </select>
+
+        </div>
+      </div>
+      <!-- <div class="button" (click)="fetchGraphData()"><img src="../../../assets/icons/arrow-right white.svg" alt=""></div> -->
+    </div>
+    <form [formGroup]="graphYearRangeForm">
+    <div class="row mt-2">
+      <div class="col-5">      </div>
+
+      <div class="col-3">
+        <div class="form-group">
+          <label for="">Select Start Year</label>
+          <select formControlName="startYear" class="form-control"  >
+            <option *ngFor="let year of yearsList" [value]="year">{{year}}</option>
+          </select>
+
+        </div>
+      </div>
+      <div class="col-1"></div>
+      <div class="col-3">
+        <div class="form-group">
+          <label for="">Select End Year</label>
+          <select formControlName="endYear" class="form-control"  >
+            <option *ngFor="let year of yearsList" [value]="year">{{year}}</option>
+          </select>
+
+        </div>
+      </div>
+    </div></form>
+
+
+  </form>
+  <div class="p-5 graph-container">
+  <canvas mdbChart
+              [chartType]="chartType"
+              [datasets]="chartDatasets"
+              [labels]="chartLabels"
+              [colors]="chartColors"
+              [options]="chartOptions"
+              [legend]="false"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)">
+
+          </canvas>
+        </div>
+</div>
+
+
+<div class="card mx-2 my-4 p-4">
+  <h2 class="fw-bold">Revenue</h2>
+  <div class="piechart-container" style="display: block">
+    <canvas mdbChart *ngIf="reveune.buyerAmountSum!=null"
+        [chartType]="piechartType"
+        [datasets]="piechartDatasets"
+        [labels]="piechartLabels"
+        [colors]="piechartColors"
+        [options]="piechartOptions"
+        [legend]="true"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)">
+    </canvas>
+    <app-no-data *ngIf="reveune.buyerAmountSum==null"></app-no-data>
+  </div>
+</div>
+<app-loader *ngIf="isLoading"></app-loader>
+

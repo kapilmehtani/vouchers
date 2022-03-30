@@ -1,0 +1,89 @@
+<div class="container">
+  <h3 class="my-2">My Buy Orders</h3>
+  <table  mat-table [dataSource]="buyOrders" multiTemplateDataRows matSort class="mat-elevation-z8 w-100 my-4">
+    <ng-container matColumnDef="orderId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Id </th>
+      <td mat-cell *matCellDef="let element"> {{element?.orderId}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="orderItemId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Itme Id </th>
+      <td mat-cell *matCellDef="let element"> {{element?.orderItemId}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="transactionId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Id </th>
+      <td mat-cell *matCellDef="let element"><strong> {{element?.transactionId}}</strong> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="orderDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Date </th>
+      <td mat-cell *matCellDef="let element">
+
+        <div> {{element?.orderDate | date}}</div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="orderPrice">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Price </th>
+      <td mat-cell *matCellDef="let element"><strong>$ {{element.orderItemPrice}} </strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="rate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Rate </th>
+      <td mat-cell *matCellDef="let element"><div (click)="review(element)" class="action-button mouse-pointer"> Rate Seller </div></td>
+    </ng-container>
+
+    <ng-container matColumnDef="report">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Report issue </th>
+      <td mat-cell *matCellDef="let element">
+         <div *ngIf="!element?.issue" (click)="reportAnIssue(element)" class="action-button mouse-pointer"> Report An Issue</div>
+         <div *ngIf="element?.issue " class="">
+           <button *ngIf="!element?.issue?.isClosed" class="button" [matBadge]="1"  [matBadgeHidden]="element?.isChatUnSeen" [routerLink]="'../issue/'+element?.issue?.issueId">Open Chat</button>
+           <div *ngIf="element?.issue?.isClosed"> Issue Closed</div>
+          </div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+        <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <div class="row p-3">
+            <div class="col-4 image-container d-flex"><img [src]="element.voucher?.imageUrl" class="voucher-image img-fluid" alt=""></div>
+            <div class="col-4">
+              <p><strong>Seller Id: </strong>{{element.voucher?.seller.id}}</p>
+              <p><strong>Title: </strong>{{element.voucher?.title}}</p>
+              <p><strong>Selling Price: </strong>$ {{element.voucher?.sellingPrice}}</p>
+              <p><strong>Listing Amount: </strong>$ {{element.voucher?.voucherValue}}</p>
+              <p><strong>Listing Code: </strong> {{element.voucher?.voucherCode}}</p>
+              <p><strong>Description: </strong>{{element.voucher?.description}}</p>
+            </div>
+            <div class="col-4">
+              <p><strong>Seller Name: </strong>{{element.voucher?.seller.firstName+ ' '+element.voucher?.seller.lastName}}</p>
+              <p><strong>Posted on: </strong>{{element.voucher?.createdOn | date}}</p>
+              <p><strong>Expiry  Date: </strong>{{element.voucher?.expiryDate | date}}</p>
+                <p ><strong>Is Negotiable: </strong>{{element.voucher?.negotiable ? 'Yes': 'No'}}</p>
+
+            </div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+  <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
+    [class.example-expanded-row]="expandedElement === element"
+    (click)="expandedElement = expandedElement === element ? null : element;expandedElementId=element.taskId">
+  </tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  </table>
+  </div>
+  <div *ngIf="buyOrders.length===0" class="show-message-box container">
+    <div class="message-show">
+      <h5>
+        You have not bought any vouchers.
+      </h5>
+    </div>
+  </div>
+  <app-loader *ngIf="isLoading"></app-loader>
+

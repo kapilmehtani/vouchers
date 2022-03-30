@@ -1,0 +1,23 @@
+<div class="p-2 p-md-4 w-100 ">
+  <h4 class="text-center p-2">Quote Your Price</h4>
+  <form [formGroup]="quoteForm" (ngSubmit)="quotePrice()">
+    <div class="form-group">
+      <input
+        type="number"
+        class="form-control"
+        placeholder="quote your Price"
+        name="quotedPrice"
+        formControlName="quotedPrice"
+        value=""
+        title="Enter price less than selling price"
+      />
+      <div *ngIf="quoteForm.get('quotedPrice')!.invalid && !quoteForm.get('quotedPrice')!.untouched">
+        <span class="red-text" *ngIf="quoteForm.get('quotedPrice')!.errors.required">Enter the Price</span>
+        <span class="red-text" *ngIf="quoteForm.get('quotedPrice')!.errors.max">Enter Price less than selling price</span>
+      </div>
+    </div>
+    <div class="form-group pt-4">
+    <button type="submit" [disabled]="quoteForm.get('quotedPrice').value > price || quoteForm.invalid!"  class="button">Quote</button>
+  </div>
+  </form>
+</div>

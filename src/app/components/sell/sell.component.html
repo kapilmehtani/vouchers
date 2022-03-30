@@ -1,0 +1,118 @@
+<div class="container">
+  <form [formGroup]="sellVoucherForm" (ngSubmit)="submitDetails()">
+    <div class="form-group">
+      <label for="category">Category of the listing*</label>
+      <!-- <input formControlName="categoryName" class="form-control" list="category-list" />
+      <datalist id="category-list">
+        <option *ngFor="let item of category" value="{{ item }}"></option>
+      </datalist> -->
+      <select class="form-control" formControlName="categoryId"  (change)="getCompanyById($event.target.value)">
+        <option value="">Select Category</option>
+        <option *ngFor="let item of category; " value={{item.id}} >{{ item.name }}</option>
+      </select>
+      <div *ngIf="sellVoucherForm.get('categoryId')!.invalid && !sellVoucherForm.get('categoryId')!.untouched">
+        <span *ngIf="sellVoucherForm.get('categoryId')!.errors?.required">Please enter a Category !</span>
+      </div>
+    </div>
+    <br />
+    <div class="form-group">
+      <label for="category">Brand of the listing*</label>
+      <!-- <input formControlName="brandName" class="form-control" list="brand-list" />
+      <datalist id="brand-list">
+        <option *ngFor="let item of brand" value="{{ item }}"></option>
+      </datalist> -->
+      <select class="form-control" formControlName="companyId" id="">
+        <option value="" >Select Brand</option>
+        <ng-container *ngIf="!isLoading" >
+        <!-- <app-loader *ngIf="isLoading"></app-loader> -->
+        <option  *ngFor="let item of company;let i=index" value={{item.id}}>{{item.name}}</option>
+        </ng-container>
+      </select>
+      <div *ngIf="sellVoucherForm.get('companyId')!.invalid && !sellVoucherForm.get('companyId')!.untouched">
+        <span *ngIf="sellVoucherForm.get('companyId')!.errors?.required">Please enter a Brand Name!</span>
+      </div>
+    </div>
+    <br />
+    <div class="form-group">
+      <label for="category">Listing Type*</label>
+      <select class="form-control" formControlName="voucherType" id="">
+        <option value="">Select Voucher Type</option>
+        <option value="giftCard">Gift Card</option>
+        <option value="voucher">Voucher</option>
+      </select>
+      <div *ngIf="sellVoucherForm.get('voucherType')!.invalid && !sellVoucherForm.get('voucherType')!.untouched">
+        <span *ngIf="sellVoucherForm.get('voucherType')!.errors?.required">Please select a listing type!</span>
+      </div>
+    </div>
+    <br />
+    <div class="form-group">
+      <label for="category">Title*</label>
+      <input type="text" formControlName="title" class="form-control">
+      <div *ngIf="sellVoucherForm.get('title')!.invalid && !sellVoucherForm.get('title')!.untouched">
+        <span *ngIf="sellVoucherForm.get('title')!.errors?.required">Please enter a Title!</span>
+      </div>
+    </div><br>
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label for="">Enter Value of the listing*</label>
+        <input formControlName="voucherValue" class="form-control" type="number" />
+        <div *ngIf="sellVoucherForm.get('voucherValue')!.invalid && !sellVoucherForm.get('voucherValue')!.untouched">
+          <span *ngIf="sellVoucherForm.get('voucherValue')!.errors?.required">Please enter the Cost !</span>
+        </div>
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="">Enter the Code*</label>
+        <input formControlName="voucherCode" class="form-control" type="text" />
+        <div *ngIf="sellVoucherForm.get('voucherCode')!.invalid && !sellVoucherForm.get('voucherCode')!.untouched">
+          <span *ngIf="sellVoucherForm.get('voucherCode')!.errors?.required">Please enter the Code !</span>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label for="">Enter Selling Price* </label>
+        <input formControlName="sellingPrice" class="form-control" type="number" />
+        <div *ngIf="sellVoucherForm.get('sellingPrice')!.invalid && !sellVoucherForm.get('sellingPrice')!.untouched">
+          <span *ngIf="sellVoucherForm.get('sellingPrice')!.errors?.required">Please enter a sellingPrice !</span>
+          <!-- <span *ngIf="sellVoucherForm.get('sellingPrice')!.errors?.required">Please less amt then vouchercost!</span> -->
+        </div>
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="">Valid Upto*</label>
+        <input formControlName="expiryDate" class="form-control" type="date" />
+        <div *ngIf="sellVoucherForm.get('expiryDate')!.invalid && !sellVoucherForm.get('expiryDate')!.untouched">
+          <span *ngIf="sellVoucherForm.get('expiryDate')!.errors?.required">Please enter a expiryDate !</span>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="form-group">
+      <label class="me-3" for="">Is it negotiable ?</label>
+      <input formControlName="negotiable" class="form-check-input " type="checkbox" value="" id="flexCheckDefault">
+    </div>
+    <br />
+    <div class="form-grpup">
+      <label for="">Upload image of listing*</label>
+      <span *ngIf="isUploading" class="float-end">Uploading Image...</span>
+      <input type="file" formControlName="file"  class="form-control" (change)="onFileChange($event)">
+      <div *ngIf="!this.sellVoucherForm.get('imageUrl')">hii</div>
+    </div><br>
+    <div class="form-group">
+      <label class="me-3" for="">Description/ Terms and Conditions*</label>
+      <textarea formControlName="description" class="form-control" id="" cols="10" rows="5"></textarea>
+      <div *ngIf="sellVoucherForm.get('description')!.invalid && !sellVoucherForm.get('description')!.untouched">
+        <span *ngIf="sellVoucherForm.get('description')!.errors?.required">Please enter a description !</span>
+      </div>
+    </div>
+    <br />
+    <div class="form-group">
+      <input formControlName="terms" class="form-check-input " type="checkbox" value="" id="flexCheckDefault">
+      <label class="m-1" for="">I agree to the <a routerLink="/T&C" target="_blank"> Terms and Conditions </a></label>
+
+    </div>
+    <button [disabled]="!sellVoucherForm.valid || sellVoucherForm.get('terms').value ==false" class="button">Submit</button>
+  </form>
+</div>
+<!-- <app-loader *ngIf="isLoading"></app-loader> -->
+

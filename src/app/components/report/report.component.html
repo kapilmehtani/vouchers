@@ -1,0 +1,17 @@
+<div class="">
+  <form [formGroup]="reportForm" (ngSubmit)="submitReport()">
+    <div class="form-group">
+      <label for="">Order Item Id</label>
+      <input disabled type="text" formControlName="orderItemId" class="form-control">
+    </div><br>
+    <!-- <div *ngIf="!isSellOrder" class="form-group">
+      <label for="">Transaction Id</label>
+      <input disabled type="text" formControlName="transactionId" class="form-control">
+    </div><br> -->
+    <div class="form-group">
+      <label for="">Comments</label>
+      <textarea class="form-control" formControlName="comment" id="" cols="30" rows="10"></textarea>
+    </div><br>
+    <button [disabled]="!reportForm.valid" class="submit button float-end">Submit</button>
+  </form>
+</div>

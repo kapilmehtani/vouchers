@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="search-container my-4">
+    <div class="text-center mb-1">Search Vouchers</div>
+    <form [formGroup]="searchForm" (ngSubmit)="searchVoucher()" class=" d-flex">
+      <input class="searchbar py-2 px-3 m-auto" formControlName="input" type="search" placeholder="Search" aria-label="Search">
+      <!-- <button class="btn " type="submit"><img src="../../../assets/feather/search.svg" alt=""></button> -->
+    </form>
+  </div>
+  <div class="row">
+    <section class="col-2 p-4  bg-light">
+      <section>
+        <h5 class="pb-3">Filters</h5>
+        <section class="m-2">
+          <h6 class="font-weight-bold mb-3 mouse-pointer" (click)="showCategories=!showCategories">Categories
+            <img class="float-end" [src]="showCategories ? '../../../assets/feather/chevron-down.svg':'../../../assets/feather/chevron-right.svg'" alt="">
+          </h6>
+          <div *ngIf="!showCategories">
+          <div  *ngFor="let item of category" class="form-check pl-0 mb-3">
+            <input #{{item.name}} [checked]="item.id == categoryId" type="checkbox" (change)="insertCategoriesIntoFIlter($event.target.checked,item.id)"  class="form-check-input filled-in" />
+            <label
+              class="form-check-label small text-uppercase card-link-secondary"
+              for="new"
+              >{{item.name}}</label
+            >
+          </div></div>
+        </section>
+
+        <section class="m-2">
+          <h6 class="font-weight-bold mb-3 mouse-pointer" (click)="showBrands=!showBrands">Brands
+            <img class="float-end" [src]="showBrands ? '../../../assets/feather/chevron-down.svg':'../../../assets/feather/chevron-right.svg'" alt="">
+          </h6>
+          <div *ngIf="showBrands">
+          <div *ngFor="let item of company" class="form-check pl-0 mb-3">
+            <input [checked]="item.id==findInArray(item.id)" type="checkbox" class="form-check-input filled-in" (change)="insertCompaniesIntoFIlter($event.target.checked,item.id)" id="new" />
+            <label
+              class="form-check-label small text-uppercase card-link-secondary"
+              for="new"
+              >{{item.name}}</label
+            >
+          </div></div>
+        </section>
+
+        <section>
+          <h6>Verified Seller</h6>
+          <div class="m-2">
+            <input type="checkbox" class="form-check-input filled-in" (change)="insertVerifiedIntoFIlter($event.target.checked)" >
+            <label
+              class="form-check-label small text-uppercase card-link-secondary mx-2"
+              for="new"
+              >Yes</label
+            >
+          </div>
+        </section>
+
+
+
+        <!-- <section class="mb-4">
+          <h6 class="font-weight-bold mb-3">Price</h6>
+
+          <div class="slider-price d-flex align-items-center ">
+            <span class="font-weight-normal small text-muted mr-2">$0</span>
+            <form class="multi-range-field  ">
+              <input id="multi" class="multi-range" type="range" />
+            </form>
+            <span class="font-weight-normal small text-muted ml-2">$100</span>
+          </div>
+        </section> -->
+      </section>
+    </section>
+  <div class="col-10 row my-3">
+    <div class="col-md-3" *ngFor="let voucher of vouchers">
+      <app-voucher-card [voucher]="voucher"></app-voucher-card>
+    </div>
+  </div>
+  </div>
+</div>
+<app-loader *ngIf="isLoading"></app-loader>

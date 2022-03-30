@@ -1,0 +1,61 @@
+p {
+  margin-bottom: 0;
+}
+
+.card {
+  font-family: 'Lato', sans-serif;
+  font-weight: 600;
+  border-radius : .375rem;
+  border: none;
+&:hover{
+  box-shadow: 0 0.125rem .25rem rgba(0, 0, 0, 0.05), 0 1.875rem 2.5rem rgba(0, 0, 0, 0.2);
+}
+}
+
+.card-title {
+  max-width: 100%;
+  color: #354583;
+  // height: 1.5rem;
+}
+
+.card-body {
+  padding: .5rem 1rem .25rem 1rem;
+}
+
+.card-img-top{
+  max-height: 20vh;
+  width: auto;
+  margin: auto;
+}
+.image-container {
+  height: 20vh;
+}
+
+.icon {
+  height: 1.25rem;
+  margin: auto .25rem;
+}
+
+.price {
+  border: .125rem solid green;
+  border-radius: .5rem;
+  color: green;
+  padding: .15rem .5rem;
+  width: max-content;
+  margin-bottom: 0;
+}
+
+
+.button {
+  text-align: center;
+  width: 50%;
+  margin: .2rem .25rem;
+}
+
+.light-black-color {
+  color: #071753;
+}
+
+.dark-blue-color {
+  color: #354583;
+}

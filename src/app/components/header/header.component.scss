@@ -1,0 +1,48 @@
+@import "../../scss/variables.scss";
+
+.logo{
+  color: antiquewhite;
+}
+.navbar {
+  box-shadow: rgba(0, 0, 0, 0.15) 0.075rem 0.075rem 0.12rem;
+  padding: 1vh 5vh 1vh 5vh;
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: $header-bg;
+  .logo {
+    flex-grow: 1;
+  }
+
+
+  .nav-list {
+    align-self: flex-end;
+    margin: 0;
+    display: flex;
+    list-style-type: none;
+
+    a,
+    a:hover,
+    a:active {
+      color: white;
+      text-decoration: none;
+    }
+
+
+  }
+}
+
+
+.notification-card {
+  width: 20rem;
+
+  p {
+    margin-bottom: 0;
+  }
+
+  .button {
+    text-align: center;
+    width: 50%;
+  }
+}
+
+

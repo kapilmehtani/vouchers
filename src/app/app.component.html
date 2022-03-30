@@ -1,0 +1,51 @@
+<app-header *ngIf="!router.url.includes('admin')"></app-header>
+<!-- <app-filter *ngIf="!router.url.includes('admin')"></app-filter> -->
+<div class="container-fluid" *ngIf="!router.url.includes('admin')">
+  <div class="row position-relative">
+    <div class="col-1 p-0  nav-container" id="sticky-sidebar">
+      <div class="nav flex-column flex-nowrap  overflow-auto text-white">
+        <a (click)="showNotifications=false" routerLink="home" routerLinkActive="active" #home="routerLinkActive" class="nav-link d-flex flex-column"
+          ><img class="p-1" [src]="home.isActive && !showNotifications?'../assets/icons/home active.svg':'../assets/icons/home light.svg'" width="50%" alt="" />
+          <span class="nav-link-title"> Home</span>
+        </a>
+        <a (click)="showNotifications=false" *ngIf="token !=''" routerLink='buy-orders' routerLinkActive="active"  #orders="routerLinkActive"  class="nav-link d-flex flex-column"
+          ><img class="p-1" [src]="orders.isActive && !showNotifications ?'../assets/icons/orders active.svg':'../assets/icons/orders light.svg'" width="50%" alt="" />
+          <span class="nav-link-title small-text"> Orders</span>
+        </a>
+        <a (click)="showNotifications=false" *ngIf="token !=''" routerLink="sell-orders" routerLinkActive="active" #sales="routerLinkActive" class="nav-link d-flex flex-column"
+          ><img class="p-1" [src]="sales.isActive ?'../assets/icons/sales active.svg':'../assets/icons/sales light.svg'" width="50%" alt="" />
+          <span class="nav-link-title"> Sales</span>
+        </a>
+        <a *ngIf="token !=''" (click)="showNotifications=!showNotifications"
+        [ngClass]="{active: showNotifications}"  class="nav-link d-flex flex-column">
+        <div class="d-flex" [matBadge]="notificationCount"  [matBadgeHidden]="notificationCount==0">
+          <img class="p-1 m-auto" [src]="showNotifications ?'../assets/icons/alert active.svg':'../assets/icons/alert light.svg'" width="50%" alt="" />
+        </div><span class="nav-link-title">Alerts</span></a>
+
+        <a (click)="showNotifications=false" *ngIf="token !=''" routerLink="wallet" routerLinkActive="active" #wallet="routerLinkActive" class="nav-link d-flex flex-column"
+          ><img class="p-1" [src]="wallet.isActive ?'../assets/icons/wallet active.svg':'../assets/icons/wallet light.svg'" width="50%" alt="" />
+          <span class="nav-link-title"> Wallet</span>
+        </a>
+        <a (click)="showNotifications=false" *ngIf="token !=''" routerLink="profile" routerLinkActive="active" #profile="routerLinkActive" class="nav-link d-flex flex-column"
+          ><img class="p-1" [src]="profile.isActive ?'../assets/icons/user active.svg':'../assets/icons/user light.svg'" width="50%" alt="" />
+          <span class="nav-link-title"> Profile</span>
+        </a>
+
+
+
+          <a *ngIf="token !=''" (click)="logout()" class="nav-link d-flex flex-column mt-auto"
+          ><img class="p-1" src='../assets/icons/log-out.svg' width="50%" alt="" />
+          <span class="nav-link-title">Logout</span></a>
+      </div>
+    </div>
+    <div class="col-11  container body">
+      <router-outlet></router-outlet>
+      <app-notification *ngIf="showNotifications" [notifications]="notifications"></app-notification>
+      <div *ngIf="showNotifications" (click)="closeNotifications()" class="close-notification"></div>
+    </div>
+  </div>
+</div>
+<router-outlet *ngIf="router.url.includes('admin')"></router-outlet>
+<app-footer></app-footer>
+
+

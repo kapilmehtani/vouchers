@@ -1,0 +1,65 @@
+<div class="p-2 p-md-3 m-auto">
+
+
+      <h4 class="card-title text-center">Create Account</h4>
+      <p class="text-center">Get started with your account</p>
+      <form [formGroup]="signupForm">
+        <div class="form-group  py-1">
+          <input name="" class="form-control" placeholder="First name*" type="text" formControlName="firstName" title="Minimun 3 character">
+          <div *ngIf="signupForm.get('firstName')!.invalid && !signupForm.get('firstName')!.untouched">
+            <span class="red-text" *ngIf="signupForm.get('firstName')!.errors?.required">Please enter your First Name!</span>
+            <span class="red-text" *ngIf="signupForm.get('firstName')!.invalid && signupForm.get('firstName').dirty">Please enter minimum 3 letters!</span>
+          </div>
+        </div>
+        <div class="form-group py-1">
+          <input name="" class="form-control" placeholder="Middle name" type="text" formControlName="middleName">
+          <div *ngIf="signupForm.get('middleName')!.invalid && !signupForm.get('middleName')!.untouched">
+            <span class="red-text" *ngIf="signupForm.get('middleName')!.errors?.required">Please enter your Middle Name!</span>
+          </div>
+        </div>
+        <div class="form-group py-1">
+          <input name="" class="form-control" placeholder="Last name*" type="text" formControlName="lastName">
+          <div *ngIf="signupForm.get('lastName')!.invalid && !signupForm.get('lastName')!.untouched">
+            <span class="red-text" *ngIf="signupForm.get('lastName')!.errors?.required">Please enter your Last Name!</span>
+          </div>
+        </div>
+        <div class="form-group py-1">
+          <input name="" class="form-control" placeholder="Email address*" type="email" formControlName="email">
+          <div *ngIf="signupForm.get('email')!.invalid && !signupForm.get('email')!.untouched">
+            <span class="red-text" *ngIf="signupForm.get('email')!.errors?.required">Please enter your email!</span>
+            <span class="red-text" *ngIf="signupForm.get('email')!.errors?.email"> Please enter a valid email!! </span>
+          </div>
+        </div>
+        <div class="form-group py-1">
+          <input name="" class="form-control" placeholder="Phone number*" type="text" formControlName="mobile">
+          <div *ngIf="signupForm.get('mobile')!.invalid && !signupForm.get('mobile')!.untouched">
+            <!-- <span class="red-text" *ngIf="signupForm.get('mobile')!.errors?.required">Please enter your mobile number!</span> -->
+            <span class="red-text" *ngIf="signupForm.get('mobile')!.invalid">Please 10 digit mobile number!</span>
+          </div>
+        </div>
+        <div class="form-group py-1">
+          <input class="form-control" placeholder="Create password*" type="password" formControlName="password">
+          <div *ngIf="signupForm.get('password')!.invalid && !signupForm.get('password')!.untouched">
+            <span class="red-text" *ngIf="signupForm.get('password')!.errors?.required">Please enter your password!</span>
+            <span class="red-text" *ngIf="signupForm.get('password')!.invalid">Password should be min 6 characters!</span>
+            <!-- <span class="red-text" *ngIf="f.password.errors.minlength">Password should be min 6 character!</span> -->
+          </div>
+        </div>
+        <div class="form-group py-1">
+          <input class="form-control" placeholder="Repeat password*" type="password" formControlName="rePassword">
+          <div *ngIf="signupForm.get('rePassword')!.invalid && !signupForm.get('rePassword')!.untouched">
+            <!-- <span class="red-text" *ngIf="signupForm.get('rePassword')!.errors?.required">Please enter your Password again!</span> -->
+            <span class="red-text" *ngIf="signupForm.get('rePassword').value != signupForm.get('password').value">Password does not match!</span>
+            <!-- <span class="red-text" *ngIf="f.rePassword.errors.invalidPassword">Password not match!</span> -->
+          </div>
+        </div>
+        <div class="form-group my-1">
+          <button type="submit" class="button" [disabled]="signupForm.get('firstName')!.invalid || signupForm.get('lastName')!.errors?.required || signupForm.get('email')!.errors?.email || signupForm.get('mobile')!.invalid || signupForm.get('password')!.invalid || (signupForm.get('rePassword').value ==null || signupForm.get('rePassword').value != signupForm.get('password').value)">
+            Create Account
+          </button>
+        </div>
+        <p class="text-center">Have an account? <a class="link" (click)="openLoginDialog()">Log In</a> </p>
+      </form>
+
+
+</div>

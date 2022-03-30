@@ -1,0 +1,220 @@
+
+<div *ngIf="buyVouchers.length!=0 && isCart" class="container-fluid cartMainBox">
+  <div class="container cart-main-box">
+
+    <div class="cart-box">
+      <div class="mycart-heading">
+        <h4>My Vouchers ({{buyVouchers.length}})</h4>
+      </div>
+      <div class="row">
+        <div class="col-12" *ngFor="let voucher of buyVouchers">
+          <div class="card my-2" >
+            <div class="row">
+              <div class="col-3 d-flex image-container">
+                <div class="d-flex image-container">
+                  <img [src]="voucher.companyImgUrl" class="card-img-top img-fluid" alt="...">
+                </div>
+              </div>
+              <div class="col-8 p-2">
+                <div class="card-body">
+                  <div class="d-flex">
+                    <h5 class="card-title d-inline my-auto p-0 overflow-text" [title]="voucher.title">{{voucher.title}}</h5>
+                  <!-- <img *ngIf="voucher.isVerified" src="../../../assets/icons/verified.svg" class="icon" title="Verified" alt=""> -->
+                    <p class="price ms-auto" >
+                        Price $ {{voucher.sellingPrice}}
+                    </p>
+                  </div>
+                  <p class="overflow-text" [title]="voucher.description">{{voucher.description}}</p>
+                  <div class="d-flex">
+                    <p class="small-font">Worth: ${{voucher.voucherValue}}</p>
+                    <p class="ms-auto small-font">Expiry Date: {{voucher.createdOn | date}}</p>
+                  </div>
+                </div>
+              </div><!-- End of col-6 -->
+            </div><!-- End of inner row -->
+          </div><!-- End of outer card -->
+        </div>
+      </div>
+    </div>
+
+    <div class="price-details-box">
+      <div class="mycart-heading">
+        <h4>Price Details</h4>
+      </div>
+      <div>
+        <table style="color: black">
+          <tr>
+            <td>Price ({{buyVouchers.length}} items) </td>
+            <td>${{voucherAmount}}</td>
+          </tr>
+          <tr>
+            <td>Convenience Fee <mat-icon class="mouse-pointer help-icon" title="2.5% of total listing amount">help_outline</mat-icon></td>
+            <td>${{fee}}</td>
+          </tr>
+          <tr>
+            <td>Coins Earned <mat-icon class="mouse-pointer help-icon" title="5% of total listing amount">help_outline</mat-icon></td>
+            <td style=" color:green" title='Applicable for Physical Vouchers'>{{points}}</td>
+          </tr>
+          <tr>
+            <td>Wallet Ballance <mat-icon class="mouse-pointer help-icon" title="Coins in your wallet">help_outline</mat-icon></td>
+            <td style=" color:green">{{existPoints}}</td>
+          </tr>
+          <tr>
+            <td><label class="me-3" for="">Redeem with coins</label></td>
+            <td><input type="checkbox" [checked]="isChecked"  (change)="isChecked = !isChecked"/></td>
+          </tr>
+        </table>
+        <div *ngIf="isChecked" class="increment-box">
+          <button [disabled]="coinUsed==0" (click)="decrementQuantity()" class="btn btn-danger"> - </button>
+          <span class="mx-3">{{coinUsed}} <img class="p-1" src="../../../assets/images/coin 2.png" height="25vh" alt="" /></span>
+          <button [disabled]="coinUsed==existPoints" (click)="incrementQuantity()" class="btn btn-primary"> + </button>
+        </div>
+
+        <div class="dashed-box">
+          <hr class="dashed-line" />
+        </div>
+        <table style=" color: black" >
+          <tr>
+            <td>Total Amount</td>
+            <td>${{totalAmount}}</td>
+          </tr>
+          <tr *ngIf="isChecked">
+            <td>Discount</td>
+            <td>
+              <h6>-${{discount}}</h6>
+            </td>
+          </tr>
+          <tr *ngIf="isChecked">
+            <td>Final Amount</td>
+            <td>${{redeemAmt}}</td>
+          </tr>
+        </table>
+        <div class="pay-now-box">
+          <button id="payment-button" class="pay-now" (click)="Pay()">
+            Continue
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!isCart && !isLoading" class="container-fluid cartMainBox">
+  <div class="container cart-main-box">
+
+    <div class="cart-box">
+      <div class="mycart-heading">
+        <h4>My Vouchers (1)</h4>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card my-2" >
+            <div class="row">
+              <div class="col-3 d-flex image-container">
+                <div class="d-flex image-container">
+                  <img [src]="buyVouchers.companyImgUrl" class="card-img-top img-fluid" alt="...">
+                </div>
+              </div>
+              <div class="col-8 p-2">
+                <div class="card-body">
+                  <div class="d-flex">
+                    <h5 class="card-title d-inline my-auto p-0 overflow-text" [title]="buyVouchers.title">{{buyVouchers.title}}</h5>
+                  <!-- <img *ngIf="voucher.isVerified" src="../../../assets/icons/verified.svg" class="icon" title="Verified" alt=""> -->
+                    <p class="price ms-auto" >
+                        Price $ {{buyVouchers.sellingPrice}}
+                    </p>
+                  </div>
+                  <p class="overflow-text" [title]="buyVouchers.description">{{buyVouchers.description}}</p>
+                  <div class="d-flex">
+                    <p class="small-font">Worth: ${{buyVouchers.voucherValue}}</p>
+                    <p class="ms-auto small-font">Expiry Date: {{buyVouchers.createdOn | date}}</p>
+                  </div>
+                </div>
+              </div><!-- End of col-6 -->
+            </div><!-- End of inner row -->
+          </div><!-- End of outer card -->
+        </div>
+      </div>
+    </div>
+
+    <div class="price-details-box">
+      <div class="mycart-heading">
+        <h4>Price Details</h4>
+      </div>
+      <div>
+        <table style="color: black">
+          <tr>
+            <td>Price (1 items) </td>
+            <td>${{voucherAmount}}</td>
+          </tr>
+          <tr>
+            <td>Convenience Fee <mat-icon style="color: green;position:absolute" class="mouse-pointer" title="2.5% of total listing amount">help_outline</mat-icon></td>
+            <td>${{fee}}</td>
+          </tr>
+          <tr>
+            <td >Coins Earned<mat-icon style="color: green;position:absolute" class="mouse-pointer" title="5% of total listing amount">help_outline</mat-icon>
+            </td>
+            <td style=" color:green">{{points}}</td>
+          </tr>
+          <tr>
+            <td>Wallet Ballance <mat-icon style="color: green;position:absolute" class="mouse-pointer" title="Coins in your wallet">help_outline</mat-icon></td>
+            <td style=" color:green">{{existPoints}}</td>
+          </tr>
+          <tr>
+            <td><label class="me-3" for="">Redeem with coins</label></td>
+            <td><input type="checkbox" [checked]="isChecked"  (change)="isChecked = !isChecked"/></td>
+          </tr>
+        </table>
+
+        <div *ngIf="isChecked" class="increment-box">
+          <button [disabled]="coinUsed==0" (click)="decrementQuantity()" class="btn" style="background-color: red;color: white;"> - </button>
+          <span class="mx-3">{{coinUsed}} <img class="p-1" src="../../../assets/images/coin 2.png" height="25vh" alt="" /></span>
+          <button [disabled]="coinUsed==existPoints || redeemAmt<.51" (click)="incrementQuantity()" class="btn" style="background-color: green;color: white;"> + </button>
+        </div>
+        <div class="dashed-box">
+          <hr class="dashed-line" />
+        </div>
+        <table style=" color: black" >
+          <tr>
+            <td>Total Amount</td>
+            <td>
+              <h6>${{totalAmount}}</h6>
+            </td>
+          </tr>
+          <tr *ngIf="isChecked">
+            <td>Discount</td>
+            <td>
+              <h6>-${{discount}}</h6>
+            </td>
+          </tr>
+          <tr *ngIf="isChecked">
+            <td>Final Amount</td>
+            <td>
+              <h6>${{redeemAmt}}</h6>
+            </td>
+          </tr>
+        </table>
+        <div class="dashed-box">
+          <hr class="dashed-line" />
+        </div>
+        <div class="pay-now-box">
+          <button id="payment-button" class="pay-now" (click)="Pay()">
+            Continue
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div *ngIf="isLoading" class="show-message-box container">
+  <div class="message-show">
+    <h5>
+      You have not checkout any vouchers. Please buy some vouchers.
+    </h5>
+  </div>
+</div> -->
+
+<app-loader *ngIf="isLoading"></app-loader>
+

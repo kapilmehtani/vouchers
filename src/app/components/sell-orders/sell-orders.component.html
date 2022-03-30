@@ -1,0 +1,56 @@
+<div class="container">
+  <h3 class="my-2">My Sell Orders</h3>
+  <table  mat-table [dataSource]="sellOrders" multiTemplateDataRows matSort class="mat-elevation-z8 w-100 my-4">
+    <ng-container matColumnDef="voucherId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Voucher Id </th>
+      <td mat-cell *matCellDef="let element"> {{element?.id}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+      <td mat-cell *matCellDef="let element"><strong> {{element?.title}}</strong> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expiryDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Expiry Date </th>
+      <td mat-cell *matCellDef="let element">
+
+        <div> {{element?.expiryDate | date}}</div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="salePrice">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Sale Price </th>
+      <td mat-cell *matCellDef="let element"><strong>$ {{element.sellingPrice}} </strong></td>
+    </ng-container>
+
+    <ng-container matColumnDef="brand">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Brand </th>
+      <td mat-cell *matCellDef="let element"> {{element.companyName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="rate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Rate </th>
+      <td mat-cell *matCellDef="let element"><div (click)="review(element)" class="action-button mouse-pointer"> Rate Seller </div></td>
+    </ng-container>
+
+    <ng-container matColumnDef="report">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Report issue </th>
+      <td mat-cell *matCellDef="let element"> <div (click)="reportAnIssue(element)" class="action-button mouse-pointer"> Report An Issue</div> </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element;expandedElementId=element.taskId">
+    </tr>
+  </table>
+</div>
+<div *ngIf="sellOrders.length===0" class="show-message-box container">
+  <div class="message-show">
+    <h5>
+      You have not uploaded any vouchers.
+    </h5>
+  </div>
+</div>
+<app-loader *ngIf="isLoading"></app-loader>

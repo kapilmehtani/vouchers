@@ -1,0 +1,23 @@
+<div class="p-2 p-md-4 w-100 ">
+  <h1 class="text-center p-2">Verify OTP</h1>
+  <h4 class="text-center p-2">Enter the OTP which is sent to your email</h4>
+  <form [formGroup]="otpForm" (ngSubmit)="verifyOtp()">
+    <div class="form-group">
+      <input
+        type="string"
+        class="form-control"
+        placeholder="OTP"
+        name="otp"
+        formControlName="otp"
+        value=""
+      />
+      <div *ngIf="otpForm.get('otp')!.invalid && !otpForm.get('otp')!.untouched">
+        <span class="red-text" *ngIf="otpForm.get('otp')!.errors?.required">Please enter the received OTP!</span>
+      </div>
+    </div>
+
+    <div class="form-group pt-4">
+    <button type="submit"  class="button">Verify</button>
+  </div>
+  </form>
+</div>

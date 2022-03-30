@@ -1,0 +1,169 @@
+<div class="container-fluid p-5 rounded bg-white mt-5 mb-5">
+  <div class="row">
+    <div class="card my-1">
+      <div class="col-md-12 border-right">
+        <div class="p-3 py-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="text-right">Edit Profile</h4>
+          </div>
+
+          <div class="row mt-3">
+            <div class="card my-2">
+              <div class="card-body">
+                <h5 class="card-title d-inline my-auto p-0 overflow-text">
+                  Basic Information
+                </h5>
+              </div>
+              <div class="center">
+                <label class="hoverable" for="fileInput">
+                  <img [src]="
+                      userDetails?.imageUrl
+                        ? userDetails?.imageUrl
+                        : 'http://res.cloudinary.com/dai8grjze/image/upload/v1624866392/mdd1jf2cvsoowkm3hykg.png'
+                    " />
+                  <div class="hover-text">Choose file</div>
+                  <div class="background"></div>
+                </label>
+                <br />
+                <input id="fileInput" type="file" (change)="onSelectFile($event)" accept="image/png, image/jpeg" />
+                <!-- <button *ngIf="userDetails?.imageUrl" (click)="onSelectFile($event,)" >delete</button> -->
+              </div>
+              <form [formGroup]="editForm">
+                <div class="form-group py-1">
+                  <label class="labels">First Name</label>
+                  <input name="" class="form-control" placeholder="First Name" type="text"
+                    formControlName="firstName" />
+                </div>
+                <div class="form-group py-1">
+                  <label class="labels">Middle Name</label>
+                  <input name="" class="form-control" placeholder="Middle Name" type="text"
+                    formControlName="middleName" />
+                </div>
+                <div class="form-group py-1">
+                  <label class="labels">Last Name</label>
+                  <input name="" class="form-control" placeholder="Last Name" type="text" formControlName="lastName" />
+                </div>
+                <div class="form-group py-1">
+                  <label class="labels">Your Email</label>
+                  <input name="" class="form-control" placeholder="Email address" type="email" formControlName="email"
+                    disabled />
+                </div>
+                <div class="form-group py-1">
+                  <label class="labels">Your Mobile Number *</label>
+                  <input name="" class="form-control" placeholder="Phone number" type="number"
+                    formControlName="mobile" />
+                  <div *ngIf="
+                      editForm.get('mobile')!.invalid &&
+                      !editForm.get('mobile')!.untouched
+                    ">
+                    <span *ngIf="editForm.get('mobile')!.errors?.required">Please enter your mobile number!</span>
+                  </div>
+                </div>
+                <!-- <div class="form-group  py-1">
+                      <label class="labels">Your Address</label>
+                      <input name="" class="form-control" placeholder="First name" type="text" formControlName="address">
+                      <div *ngIf="editForm.get('address')!.invalid && !editForm.get('address')!.untouched">
+                        <span *ngIf="editForm.get('address')!.errors?.required">Please enter your Address!</span>
+                      </div>
+                    </div> -->
+                <div class="mt-5 text-center">
+                  <button class="button profile-button mb-2" (click)="onProfileEdit()"
+                    [disabled]="!editForm.dirty || editForm.invalid!">
+                    Save Information
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="card my-2">
+              <div class="card-body">
+                <h5 class="card-title d-inline my-auto p-0 overflow-text">
+                  KYC and SSN Information
+                </h5>
+              </div>
+              <div class="form-group py-1">
+                <label class="labels">
+                  Your KYC
+                  <span *ngIf="userDetails?.ssnVerified === true; else elseBlock"
+                    style="color: green; padding-left: 18px">Verified</span>
+                  <ng-template #elseBlock>
+                    <span *ngIf="true" style="color: red; padding-left: 18px">Not Verified</span>
+                  </ng-template>
+                </label>
+              </div>
+              <div class="mb-3 py-2">
+                <form [formGroup]="verifySsn" (ngSubmit)="submitKyc()">
+                  <div class="row">
+                    <div class="col-3">
+                      <label class="m-2 d-flex">
+                        SSN
+                        <span class="mx-2">
+                          <img (mouseover)="showDetail = true" (mouseleave)="showDetail = false"
+                            src="../../../assets/feather/info.svg" height="1%" alt="" /></span>
+                      </label>
+                      <div [hidden]="!showDetail" style="font-size: small" class="badge-detail">
+                        Enter 856-45-6789 as 856456789
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <input [readonly]="userDetails?.ssnVerified" class="form-control" type="number"
+                        formControlName="ssn" placeholder="XXX-XX-XXXX" />
+                      <span *ngIf="verifySsn.get('ssn')!.invalid">Invalid SSN </span>
+                    </div>
+                    <div *ngIf="!userDetails?.ssnVerified" class="col-sm">
+                      <button [disabled]="!verifySsn.dirty || verifySsn.invalid!" class="button">
+                        Submit For Verification
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="card my-2">
+              <div class="card-body">
+                <h5 class="card-title d-inline my-auto p-0 overflow-text">
+                  Bank Information
+                </h5>
+              </div>
+              <form [formGroup]="bankForm" (ngSubmit)="onBankEdit()">
+                <div class="form-group py-1">
+                  <label class="labels">Your Account Number</label>
+                  <input name="" class="form-control" placeholder="Account number" type="text"
+                    formControlName="accountNumber" />
+                  <div *ngIf="
+                      bankForm.get('accountNumber')!.invalid &&
+                      !bankForm.get('accountNumber')!.untouched
+                    ">
+                    <span *ngIf="bankForm.get('accountNumber')!.errors?.required">Please enter your account
+                      number!</span>
+                  </div>
+                </div>
+                <div class="form-group py-1">
+                  <label class="labels">Your IFSC Code</label>
+                  <input name="" class="form-control" placeholder="IFSC" type="text" formControlName="ifscCode" />
+                  <div *ngIf="
+                      bankForm.get('ifscCode')!.invalid &&
+                      !bankForm.get('ifscCode')!.untouched
+                    ">
+                    <span *ngIf="bankForm.get('ifscCode')!.errors?.required">Please enter your IFSC code!</span>
+                  </div>
+                </div>
+                <div class="mt-5 text-center">
+                  <button class="button profile-button mb-2" type="submit"
+                    [disabled]="!bankForm.dirty || bankForm.invalid!">
+                    Save Bank Details
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-loader *ngIf="isLoading"></app-loader>

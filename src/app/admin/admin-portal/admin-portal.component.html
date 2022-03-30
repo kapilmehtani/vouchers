@@ -1,0 +1,40 @@
+<app-header></app-header>
+<div class="container-fluid">
+  <div class="row position-relative">
+    <div class="col-1 p-0 nav-container" id="sticky-sidebar">
+      <div class="nav flex-column flex-nowrap  overflow-auto text-white">
+        <a routerLink="/admin/home" routerLinkActive="active" #home="routerLinkActive" class="nav-link d-flex flex-column"
+          ><img class="p-1" [src]="home.isActive ?'../assets/icons/home active.svg':'../assets/icons/home light.svg'" width="50%" alt="" />
+          <span class="nav-link-title"> Home</span>
+        </a>
+        <a routerLink="verify" routerLinkActive="active" #verify="routerLinkActive" class="nav-link d-flex flex-column"
+          ><img class="p-1" [src]="verify.isActive ?'../assets/icons/verify active.svg':'../assets/icons/verify light.svg'" width="50%" alt="" />
+          <span class="nav-link-title"> Verify</span>
+        </a>
+        <a routerLink="approved" routerLinkActive="active" #approved="routerLinkActive" class="nav-link d-flex flex-column"
+          ><img class="p-1" [src]="approved.isActive ?'../assets/icons/list active.svg':'../assets/icons/list light.svg'" width="50%" alt="" />
+          <span class="nav-link-title"> Approved </span>
+        </a>
+        <a routerLink="escalations" routerLinkActive="active" #escalations="routerLinkActive" class="nav-link d-flex flex-column"
+          ><img class="p-1" [src]="escalations.isActive ?'../assets/icons/escalations active.svg':'../assets/icons/escalations light.svg'" width="50%" alt="" />
+          <span class="nav-link-title"> Escalations</span>
+        </a>
+        <a routerLink="users" routerLinkActive="active" #users="routerLinkActive" class="nav-link d-flex flex-column"
+          ><img class="p-1" [src]="users.isActive ?'../assets/icons/users active.svg':'../assets/icons/users light.svg'" width="50%" alt="" />
+          <span class="nav-link-title">All Users</span></a
+        >
+        <a routerLink="verify-users" routerLinkActive="active" #verifyusers="routerLinkActive"  class="nav-link d-flex flex-column"
+          ><img class="p-1" [src]="verifyusers.isActive ?'../assets/icons/users active.svg':'../assets/icons/users light.svg'" width="50%" alt="" />
+          <span class="nav-link-title">Verify Users</span></a
+        >
+
+        <a  (click)="logout()" class="nav-link d-flex flex-column mt-auto mouse-pointer"
+          ><img class="p-1" src='../assets/icons/log-out.svg' width="50%" alt="" />
+          <span class="nav-link-title">Logout</span></a>
+      </div>
+    </div>
+    <div class="col-11  container">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

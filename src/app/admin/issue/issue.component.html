@@ -1,0 +1,49 @@
+<div class="container-fluid">
+  <div class="row">
+      <div class="">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between">
+            <div> Issue Id # {{chat?.id}}</div>
+            <div class="float-right" (click)="closeChat()"><span class="mouse-pointer"  >&#10060;</span></div>
+          </div>
+          <div class="card-body" #scrollMe>
+            <ul class="chat-list">
+              <li *ngFor="let item of chat?.messages"
+              [ngClass]="{'in': user.userId != item.senderId,
+              'out': user.userId == item.senderId}"
+               class="in">
+                <div class="chat-img">
+                  <img *ngIf="user.userId == item.senderId" alt="Avtar" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+                  <img *ngIf="user.userId != item.senderId" src="{{item?.sender?.imageUrl}}" alt="">
+                </div>
+                <div class="chat-body">
+                  <div class="chat-message">
+                    <h6 *ngIf="user.userId != item.senderId">{{item.sender?.firstName}}<span class="time">{{item?.sentOn | date}}</span></h6>
+                    <h6 *ngIf="user.userId == item.senderId"><span class="time">{{item?.sentOn | date}}</span></h6>
+                    <p>{{item.message}}</p>
+                  </div>
+                </div>
+              </li>
+              <!-- <li class="out">
+                <div class="chat-img">
+                  <img alt="Avtar" src="https://bootdey.com/img/Content/avatar/avatar6.png">
+                </div>
+                <div class="chat-body">
+                  <div class="chat-message">
+                    <h5>Serena</h5>
+                    <p>Next level veard</p>
+                  </div>
+                </div>
+              </li> -->
+            </ul>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div>
+    <form [formGroup]="chatMessage" (ngSubmit)="send(chat.id)" class="textarea-container">
+      <textarea formControlName="message" name="" class="form-control" placeholder="Enter Text Here"></textarea>
+      <button  type="submit" class="btn btn-success m-3">Send</button>
+    </form>
+  </div>
+</div>

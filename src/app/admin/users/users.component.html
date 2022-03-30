@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row search-class">
+    <form [formGroup]="searchForm" (ngSubmit)="searchVoucher()" class=" d-flex">
+      <span class="user-class">Users</span>
+      <input class="searchbar p-2 search-box" formControlName="input" type="search" placeholder="Search" aria-label="Search">
+      <!-- <button class="btn " type="submit"><img src="../../../assets/feather/search.svg" alt=""></button> -->
+    </form>
+  </div>
+
+  <div class="row my-1">
+    <div class="col-md-3" *ngFor="let user of users">
+      <div class="mt-4 d-flex justify-content-center">
+        <div class="card p-2  mouse-pointer" [routerLink]="'../user/'+user.id" routerLinkActive="router-link-active" >
+            <div class="d-flex flex-row ">
+                <div class="image mr-3">
+                  <img [src]="user?.imageUrl ? user?.imageUrl : 'http://res.cloudinary.com/dai8grjze/image/upload/v1624866392/mdd1jf2cvsoowkm3hykg.png'" class="rounded-circle" width="48;" height="48" />
+                </div>
+                <div class="">
+                    <div class="d-flex flex-row ml-1">
+                      <span class="text-name overflow-text fw-bold">{{user.firstName}}</span><span class="ms-auto voucher">{{user.sales}} Sales</span>
+                    </div>
+                    <div class="d-flex flex-row ml-1">
+                      <span class="text-bottom dispute">{{user.disputes}} Active Disputes</span><span class="text-bottom voucher">{{user.purchases}} Purchases</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
+    </div>  <!-- End of ngFor -->
+  </div>  <!-- End of outer row -->
+</div>
+<app-loader *ngIf="isLoading"></app-loader>
+<app-no-data *ngIf="users.length==0"></app-no-data>

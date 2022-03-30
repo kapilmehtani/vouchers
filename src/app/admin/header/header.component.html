@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg  fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="home" routerLinkActive="active"><img src="../../../assets/images/VOUCHERMONEY ADMIN.png" alt=""></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" (click)="navbarOpen=!navbarOpen" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- <li class="nav-item">
+          <a class="nav-link" routerLink="../home" routerLinkActive="active">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="../transactions" routerLinkActive="active">Transactions</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="../users" routerLinkActive="active">Users</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="../feedback" routerLinkActive="active">Feedback</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="../issues" routerLinkActive="active">Issues</a>
+        </li> -->
+      </ul>
+
+      <span class="navbar-text">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        </ul>
+      </span>
+
+    </div>
+  </div>
+</nav>

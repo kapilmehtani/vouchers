@@ -1,0 +1,67 @@
+<div class="container" #TABLE>
+
+  <button class="mt-2 button-export button float-right" (click)="ExportTOExcel()">Export as Excel</button>
+  <table  mat-table #table  [dataSource]="issues" multiTemplateDataRows matSort class="mat-elevation-z8 w-100">
+    <ng-container matColumnDef="issueId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Issue Id </th>
+      <td mat-cell *matCellDef="let element"> {{element?.issueId}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdOn">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Expires In  </th>
+      <td mat-cell *matCellDef="let element"> {{calculateExpiryDays(element?.createdDate) }} Hours </td>
+    </ng-container>
+
+    <ng-container matColumnDef="transactionId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Id </th>
+      <td mat-cell *matCellDef="let element">
+
+        <div><strong> {{element?.order?.transactionId}}</strong></div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="voucherId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Voucher Id </th>
+      <td mat-cell *matCellDef="let element"> {{element?.order?.voucher.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="comments">
+      <th mat-header-cell *matHeaderCellDef > Comments </th>
+      <td mat-cell *matCellDef="let element">
+        <small>{{element?.comment}}</small>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="userId">
+      <th mat-header-cell *matHeaderCellDef > User Id </th>
+      <td mat-cell *matCellDef="let element" [routerLink]="'../user/'+element?.userId">
+        {{element?.userId}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef > Actions </th>
+      <td mat-cell *matCellDef="let element">
+        <button *ngIf="!element.isClosed" (click)="closeIssue(element.issueId)" class="m-2 btn  btn-danger"><small>Close</small></button>
+        <button *ngIf="element.isClosed" (click)="deleteIssue(element.issueId)" class="m-2 btn  btn-danger"><small>Delete</small></button>
+        <!-- <button *ngIf="!element.isRead" (click)="markAsReadIssue(element.issueId)" class="m-2 btn  btn-warning"><small>Mark As Read</small></button> -->
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="chat">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Chat </th>
+      <td mat-cell *matCellDef="let element">
+        <button class="button" [matBadge]="1"  [matBadgeHidden]="element.isChatUnseen" [routerLink]="'../issue/'+element?.issueId">Open Chat</button> </td>
+    </ng-container>
+
+    <tr  mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr [ngStyle]="{'background-color':!element.isRead ? '' : '' }" mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element;expandedElementId=element.taskId">
+    </tr>
+  </table>
+  </div>
+
+  <app-loader *ngIf="isLoading"></app-loader>
+
+<app-no-data *ngIf="issues.length==0"></app-no-data>

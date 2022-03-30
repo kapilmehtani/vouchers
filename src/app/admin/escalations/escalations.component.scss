@@ -1,0 +1,39 @@
+table {
+  width: 100%;
+  margin: 2rem 0;
+}
+.button-export{
+  float: right;
+  margin: 2vh 0
+}
+
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+  padding-top: 2.6vh ;
+  padding-bottom: 2.6vh;
+  font-size: 2.3vh;
+}
+
+.example-element-detail {
+  overflow: hidden;
+}
+
+
+th{
+  font-weight: bolder;
+  font-size: 2.3vh;
+}
+
+tr.example-detail-row {
+  height: 0;
+  text-align: left;
+}

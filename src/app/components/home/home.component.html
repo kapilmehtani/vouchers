@@ -1,0 +1,29 @@
+<div class="container-fluid ">
+  <div class="ad d-flex flex-column my-3 p-5 ">
+    <h6 class="text-center">“ Have Some Vouchers you won’t use.. Turn it into Cash ”  </h6>
+    <!-- <div class="button m-auto" (click)="userId?openSellDialog():openLoginDialog()">
+      SELL VOUCHERS
+    </div> -->
+  </div>
+  <div class="search-container my-4">
+    <div class="text-center mb-1">Search Vouchers</div>
+    <form [formGroup]="searchForm" (ngSubmit)="searchVoucher()" class=" d-flex">
+      <input class="searchbar py-2 px-3 m-auto" formControlName="input" type="search" placeholder="Search" aria-label="Search">
+      <!-- <button class="btn " type="submit"><img src="../../../assets/feather/search.svg" alt=""></button> -->
+    </form>
+  </div>
+  <div class="filter d-flex">
+    <div class="m-auto d-flex">
+    <div *ngFor="let category of categories" (click)="routeToFilter($event,category.id)" class="px-4 py-2 mouse-pointer">
+      {{category.name}}
+    </div>
+  </div>
+  </div>
+  <div class="row my-3">
+    <div class="col-md-3" *ngFor="let voucher of vouchers">
+      <app-voucher-card [voucher]="voucher"></app-voucher-card>
+    </div>
+  </div>
+</div>
+<app-loader *ngIf="isLoading"></app-loader>
+<app-no-data *ngIf="vouchers.length==0"></app-no-data>

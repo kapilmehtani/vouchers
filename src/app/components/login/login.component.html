@@ -1,0 +1,44 @@
+
+<div class="p-2 p-md-4 w-100 ">
+  <h1 class="text-center p-2">LOGIN</h1>
+<form [formGroup]="loginForm">
+  <div class="form-group my-3">
+    <input
+      type="email"
+      class="form-control"
+      placeholder="Your Email *"
+      name="email"
+      formControlName="email"
+      value=""
+    />
+    <div *ngIf="loginForm.get('email')!.invalid && !loginForm.get('email')!.untouched">
+      <!-- <span class="red-text" *ngIf="loginForm.get('email')!.errors?.required">Please enter email!</span> -->
+      <span class="red-text" *ngIf="loginForm.get('email')!.errors?.email"> Please enter a valid email!! </span>
+    </div>
+  </div>
+  <div class="form-group my-3">
+    <input
+      type="password"
+      class="form-control"
+      placeholder="Your Password *"
+      name="password"
+      formControlName="password"
+      value=""
+    />
+    <div *ngIf="loginForm.get('password')!.invalid && !loginForm.get('password')!.untouched">
+      <span class="red-text" *ngIf="loginForm.get('password')!.invalid">Please enter valid password!</span>
+    </div>
+  </div>
+
+  <div class="text-center mouse-pointer" (click)="openForgotPasswordDialog()">Forgot Password</div>
+  <div class="form-group pt-4">
+    <button type="submit"  class="button" [disabled]="!loginForm.dirty || loginForm.invalid!">Login</button>
+  </div>
+
+</form>
+
+  <button class="button" (click)="openSignupDialog()">Sign-up</button>
+<h6 class="text-center mt-2">OR</h6>
+  <button class="button">Signin with Google</button>
+</div>
+

@@ -1,0 +1,24 @@
+<div class="card my-2">
+  <div class="row">
+    <div class="col-3 d-flex image-container">
+      <img [src]="order.voucher[0].companyImgUrl" class="img-fluid m-auto" alt="...">
+    </div>
+    <div class="col-6 p-2">
+      <h5 class="card-title overflow-text d-inline" [title]="order.voucher[0].title">{{order.voucher[0].title}}</h5>
+      <strong class="float-end">$ {{order.voucher[0].sellingPrice}}</strong>
+      <!-- <p *ngIf="isSellOrder">Sold to {{order.buyerName}}</p> -->
+      <p *ngIf="!isSellOrder">Sold by:- {{order.seller.firstName}}</p>
+
+      <p class="ms-auto small-font">Date: {{order?.voucher[0].createdOn | date}}</p>
+    </div>
+    <div class="col-3">
+      <div *ngIf="isSellOrder" class="payment-status-container m-2" [ngStyle]="order.paymentStatus ? {'border-color':'green','color':'green'}:
+    {'border-color':'red','color':'red'}" title="Payment Status">
+        {{order.paymentStatus ? "Paid" : "Pending"}}</div>
+      <div *ngIf="!isSellOrder" class="">
+        <button class="btn btn-primary m-2 " (click)="review()"> Review</button>
+      </div>
+      <button class="btn btn-warning m-2 " (click)="reportAnIssue()"> Report</button>
+    </div>
+  </div>
+</div>

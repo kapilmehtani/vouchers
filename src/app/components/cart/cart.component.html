@@ -1,0 +1,103 @@
+<div *ngIf="cartVouchers.length!=0" class="container-fluid cartMainBox">
+  <div class="container cart-main-box">
+
+    <div class="cart-box">
+      <div class="mycart-heading">
+        <h4>My Cart ({{cartVouchers.length}})</h4>
+      </div>
+      <div class="row">
+        <div class="col-12" *ngFor="let voucher of cartVouchers">
+          <div class="card my-2 p-2" >
+            <div class="row">
+              <div class="col-4 d-flex image-container">
+                <div class="d-flex image-container">
+                  <img [src]="voucher.companyImgUrl" class="card-img-top img-fluid" alt="...">
+                </div>
+              </div>
+              <div class="col-8 p-2">
+                <div class="card-body">
+                  <div class="d-flex">
+                    <h5 class="card-title d-inline my-auto p-0 overflow-text" [title]="voucher.title">{{voucher.title}}</h5>
+                  <!-- <img *ngIf="voucher.isVerified" src="../../../assets/icons/verified.svg" class="icon" title="Verified" alt=""> -->
+                    <p class="price ms-auto" >
+                        Price $ {{voucher.sellingPrice}}
+                    </p>
+                  </div>
+                  <p class="overflow-text" [title]="voucher.description">{{voucher.description}}</p>
+                  <div class="d-flex">
+                    <p class="small-font">Worth: ${{voucher.voucherValue}}</p>
+                    <p class="ms-auto small-font">Expiry Date: {{voucher.createdOn | date}}</p>
+                  </div>
+                  <div class="remove-button-box float-end">
+                    <!-- <button class="remove-btn" (click)="removeVoucher(voucher.voucherId)">
+                      Remove
+                    </button> -->
+                    <button mat-button color="warn" class="remove-button" (click)="removeVoucher(voucher.id)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div><!-- End of col-6 -->
+            </div><!-- End of inner row -->
+          </div><!-- End of outer card -->
+        </div>
+      </div>
+    </div>
+
+    <div class="price-details-box">
+      <div class="mycart-heading">
+        <h4>Price Details</h4>
+      </div>
+      <div>
+        <table style="color: black">
+          <tr>
+            <td>Price ({{cartVouchers.length}} items) </td>
+            <td>${{voucherAmount}}</td>
+          </tr>
+          <tr>
+            <td>Convenience Fee <mat-icon  class="mouse-pointer help-icon" title="2.5% of total listing amount">help_outline</mat-icon></td>
+            <td>${{fee}}</td>
+          </tr>
+          <tr>
+            <td>Coins <mat-icon  class="mouse-pointer help-icon" title="5% of total listing amount">help_outline</mat-icon></td>
+            <td style=" color:green">{{points}}</td>
+          </tr>
+          <tr>
+            <td>Wallet Coins <mat-icon class="mouse-pointer help-icon" title="Coins in your wallet">help_outline</mat-icon></td>
+            <td style=" color:green">{{walletDescription?.coins}}</td>
+          </tr>
+        </table>
+
+        <div class="dashed-box">
+          <hr class="dashed-line" />
+        </div>
+        <table style=" color: black" >
+          <tr>
+            <td>Total Amount</td>
+            <td>
+              <h6>${{totalAmount}}</h6>
+            </td>
+          </tr>
+        </table>
+        <div class="dashed-box">
+          <hr class="dashed-line" />
+        </div>
+        <div class="pay-now-box">
+          <button id="payment-button" class="pay-now" (click)="Pay()">
+            Place Order
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="cartVouchers.length===0" class="show-message-box container">
+  <div class="message-show">
+    <h5>
+      You don't have anything in cart ,Please go and add some items to cart.
+    </h5>
+  </div>
+</div>
+<app-loader *ngIf="isLoading"></app-loader>
+

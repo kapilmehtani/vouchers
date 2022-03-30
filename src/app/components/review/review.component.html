@@ -1,0 +1,23 @@
+<div class="">
+  <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+    <div class="form-group">
+      <label for="">Voucher Id</label>
+      <input disabled type="text" formControlName="voucherId" class="form-control">
+    </div><br>
+    <div  class="form-group">
+      <label for="">Seller Id</label>
+      <input disabled type="text" formControlName="sellerId" class="form-control">
+    </div><br>
+    <div class="form-group ">
+      <label for="">Rating</label>
+      <ngx-star-rating formControlName="stars" class="d-flex my-2"></ngx-star-rating>
+    </div>
+
+    <div class="form-group">
+      <label for="">Comments</label>
+      <textarea class="form-control" formControlName="comment" id="" cols="30" rows="10"></textarea>
+    </div><br>
+    <button [disabled]="!reviewForm.valid" class="button">Submit</button>
+  </form>
+</div>
+<!-- <app-loader *ngIf="isLoading"></app-loader> -->

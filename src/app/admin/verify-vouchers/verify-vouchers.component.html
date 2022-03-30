@@ -1,0 +1,92 @@
+<div class="container">
+<table  mat-table [dataSource]="unverifiedVouchers" multiTemplateDataRows matSort class="mat-elevation-z8 w-100">
+  <ng-container matColumnDef="voucherId">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="sellingPrice">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Selling Price </th>
+    <td mat-cell *matCellDef="let element">
+
+      <div><strong>$ {{element.sellingPrice}}</strong></div>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="sellerEmail">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Seller Email </th>
+    <td mat-cell *matCellDef="let element"> {{element.seller.email}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="download">
+    <th mat-header-cell *matHeaderCellDef > Download </th>
+    <td mat-cell *matCellDef="let element">
+      <a [href]="element.imageUrl" target="_blank" class="" download="voucher">Download</a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="buttons">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+    <td mat-cell *matCellDef="let element">
+    <img (click)="onAcceptVoucher(element.id)" src="../../../assets/icons/accept.svg" class="icon mouse-pointer p-1" title="Accept" alt="">
+    <img (click)="onRejectVoucher(element.id)" src="../../../assets/icons/reject.svg" class="icon mouse-pointer p-1" title="Reject" alt="">
+    <!-- <img src="../../../assets/icons/pending.svg" class="icon mouse-pointer p-1" title="Review Later" alt=""> -->
+
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+      <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+        <div class="row p-3">
+          <div class="col-4 image-container d-flex">
+            <img [src]="element.companyImgUrl" class="voucher-image img-fluid" alt="">
+          </div>
+          <div class="col-4">
+            <p><strong>Seller Id: </strong>{{element.seller.id}}</p>
+            <p><strong>Title: </strong>{{element.title}}</p>
+            <p><strong>Selling Price: </strong>$ {{element.sellingPrice}}</p>
+            <p><strong>Listing Amount: </strong>$ {{element.voucherValue}}</p>
+            <p><strong>Listing Code: </strong> {{element.voucherCode}}</p>
+            <p><strong>Description: </strong>{{element.description}}</p>
+          </div>
+          <div class="col-4">
+            <p><strong>Seller Name: </strong>{{element.seller.firstName+ ' '+element.seller.lastName}}</p>
+            <p><strong>Posted on: </strong>{{element.createdOn | date}}</p>
+            <p><strong>Expiry  Date: </strong>{{element.expiryDate | date}}</p>
+              <p ><strong>Is Negotiable: </strong>{{element.negotiable ? 'Yes': 'No'}}</p>
+
+          </div>
+          <button class="button ml-auto" (click)="startTask(element.taskId)"
+          *ngIf="element.status=='Created'" title="Start Task">
+        <img class="py-1 px-2" src="../../assets/images/start.svg" alt="">Start</button>
+          <button class="button ml-auto" (click)="resumeTask(element.taskId)"
+            *ngIf="element.status=='On Hold'" title="Resume Task">
+          <img class="py-1 px-2" src="../../assets/images/start.svg" alt="">Resume</button>
+          <button class="button ml-auto" (click)="holdTask(element.taskId)"
+            *ngIf="element.status=='In Progress'" title="Hold Task">
+            <img class="py-1 px-2" src="../../assets/images/on_hold.svg" alt="">Hold</button>
+          <button class="button" (click)="completeTask(element.taskId)"
+            *ngIf="element.status=='In Progress'" title="Complete">
+          <img class="py-1 px-2" src="../../assets/images/complete_borderless.svg" alt="">Complete</button>
+
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+  <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
+    [class.example-expanded-row]="expandedElement === element"
+    (click)="expandedElement = expandedElement === element ? null : element;expandedElementId=element.taskId">
+  </tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+</table>
+</div>
+<app-loader *ngIf="isLoading"></app-loader>
+<app-no-data *ngIf="unverifiedVouchers.length==0"></app-no-data>

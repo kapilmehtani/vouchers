@@ -1,0 +1,55 @@
+@import "../../scss/variables";
+
+.container-fluid {
+  margin-top: 10vh;
+  min-height: 67vh;
+}
+
+
+
+.nav {
+  transition-duration: .3s;
+  background: $sidebar-bg-color;
+  padding-top: 3vh;
+  margin-top:-.3rem ;
+  // z-index: 200;
+  width: 7vw;
+  height: 92vh;
+//   &:hover {
+//     // width: 15vw;
+//     .nav-link-title{
+//     display: block;
+// }
+//   }
+  &-container {
+    // width: 6%;
+    z-index: 200;
+  }
+  .nav-link {
+    padding: 1.3vh 2.6vh;
+    margin: 1vh 0vh 1vh 1vh;
+    // align-self: center;
+    font-size: 2.5vh;
+    color: #93939D;
+    // &-title {
+      // display: none;
+      // padding: 0 .5rem;
+    // }
+    img{
+      align-self: center;
+      height: 5.24vh;
+      width: auto;
+    }
+    span{
+      align-self: center;
+      font-size: 2vh;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+  .nav-link:hover,.nav-link.active {
+    transition-duration: .3s;
+    // border-right:.5vw solid $primary-color;
+    color: $primary-color;
+  }
+}

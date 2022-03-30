@@ -1,0 +1,75 @@
+<nav class="navbar navbar-expand-lg  fixed-top">
+  <!-- <button *ngIf="token" class="btn me-2" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <img class="me-3" src="../../../assets/feather/menu.svg" onclick="" alt="">
+  </button> -->
+   <h1 class="logo"><b>VOUCHERS</b></h1>
+    <!-- <form [formGroup]="searchForm" (ngSubmit)="searchVoucher()" class="searchbar d-flex">
+      <input class="form-control" formControlName="input" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn " type="submit"><img src="../../../assets/feather/search.svg" alt=""></button>
+    </form> -->
+    <ul class="nav-list ms-md-auto">
+      <!-- <li *ngIf="token !=''" class="nav-item">
+        <a (click)="changeNotificationSeen()" class="nav-link mouse-pointer"  >
+          <div [matBadge]="notificationCount" matBadgeColor="warn" [matBadgeHidden]="notificationCount==0">
+          <img src="../../../assets/feather/bell.svg" alt=""></div></a>
+      </li> -->
+      <li *ngIf="token !=''" class="nav-item ">
+        <a class="nav-link" routerLink="cart" routerLinkActive="active" >
+          <div [matBadge]="cartVouchers.length"  [matBadgeHidden]="cartVouchers.length==0">
+          <img src="../../../assets/icons/shopping-cart.svg" alt=""></div></a>
+      </li>
+      <li class="nav-item ">
+        <a  class="nav-link mouse-pointer" (click)="token !='' ? openSellDialog():openLoginDialog()"
+        routerLinkActive="active">
+        <!-- <img src="../../../assets/feather/plus.svg" height="" alt=""> -->
+        <span> Sell Vouchers</span></a>
+
+      </li>
+      <li *ngIf="token ==''" class="nav-item mouse-pointer">
+        <a class="nav-link" (click)="openLoginDialog()" routerLinkActive="active" >Login</a>
+      </li>
+
+      <!-- <li *ngIf="token !=''" class="nav-item">
+        <a class="nav-link" (click)="logout()"  >Logout</a>
+      </li> -->
+
+    </ul>
+    <!-- <mat-menu  #menu="matMenu">
+      <button mat-menu-item [matMenuTriggerFor]="myOrders">My Orders
+      </button>
+      <button mat-menu-item>
+        <span routerLink="profile">My Account</span>
+      </button>
+      <button mat-menu-item >
+        <span routerLink="wallet">My Wallet</span>
+      </button>
+      <button mat-menu-item>
+        <span (click)="logout()">Logout</span>
+      </button>
+    </mat-menu>
+
+    <mat-menu #myOrders="matMenu">
+      <button mat-menu-item routerLink="buy-orders">Buy Orders</button>
+      <button mat-menu-item routerLink="sell-orders">Sell Orders</button>
+    </mat-menu> -->
+
+
+</nav>
+
+
+<!-- <mat-menu  #notification="matMenu" xPosition="before">
+  <div class="" *ngFor="let item of notifications">
+    <div (click)="openCheckout()" [ngClass]="{'mouse-pointer': item.notification=='QUOTE_PRICE_ACCEPTED'}" class="notification-card p-2 m-1">
+    <strong>{{item.title}}</strong>
+    <p>{{item.description}}</p>
+    <div *ngIf="item.notificationType=='NEW_PRICE_QUOTED' && !item.isComplete" class="d-flex">
+      <div (click)="acceptQuotedPrice(item.voucherId,item.buyerId,item.id)"
+      class="button m-1">Accept</div>
+      <div (click)="rejectQuotedPrice(item.voucherId,item.buyerId,item.id)"
+      class="button m-1">Reject</div>
+    </div>
+    <p class="float-end small-font">{{item.createdDate?.slice(0,10)}}</p>
+  </div>
+    <hr>
+  </div>
+</mat-menu> -->

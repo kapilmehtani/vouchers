@@ -1,0 +1,51 @@
+<div class="container">
+  <h3 class="my-2">Approved Vouchers</h3>
+  <div class="row">
+    <div class="col-3" *ngFor="let voucher of verifiedVouchers">
+      <app-voucher-card  [voucher]="voucher"></app-voucher-card>
+    </div>
+
+  </div>
+  <!-- <table  mat-table [dataSource]="verifiedVouchers" multiTemplateDataRows matSort class="mat-elevation-z8 w-100">
+    <ng-container matColumnDef="voucherId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sellingPrice">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Selling Price </th>
+      <td mat-cell *matCellDef="let element">
+
+        <div><strong>$ {{element.sellingPrice}}</strong></div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sellerEmail">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Seller Email </th>
+      <td mat-cell *matCellDef="let element"> {{element.seller.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="download">
+      <th mat-header-cell *matHeaderCellDef > Download </th>
+      <td mat-cell *matCellDef="let element">
+        <a [href]="element.imageUrl" target="_blank" class="" download="voucher">Download</a>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element;expandedElementId=element.taskId">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  </table> -->
+  </div>
+  <app-loader *ngIf="isLoading"></app-loader>
+<app-no-data *ngIf="verifiedVouchers.length==0"></app-no-data>
+

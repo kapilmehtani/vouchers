@@ -1,0 +1,121 @@
+<div class="container my-4">
+  <div class="row">
+    <div class="col-md-4">
+      <img class="img-fluid" [src]="user?.imageUrl ? user?.imageUrl : 'http://res.cloudinary.com/dai8grjze/image/upload/v1624866392/mdd1jf2cvsoowkm3hykg.png'" alt="user profile" class="rounded-circle" width="250;" height="250">
+    </div>
+    <div class="col-md-8 px-5">
+      <div class="d-flex  mb-3">
+        <h3 class="my-auto" title="User Name">{{user.firstName}}</h3>
+      <!-- <img *ngIf="user.isSellerVerified" src="../../../assets/icons/verified.svg"
+      class="icon mx-2" alt="" title="Verified Seller"> -->
+      </div>
+      <!-- <div class="rating-container d-flex my-3">
+        <img src="../../../assets/feather/star.svg" alt="" title="Seller Rating">{{user.sellerRating}}</div> -->
+
+      <!-- <p><strong>Quantity: </strong>{{user.quantity}}</p> -->
+
+      <div class="row mt-3">
+        <div class="col-6">
+          <p ><strong>Verified: </strong>{{user.ssnVerified ? 'Yes': 'No'}}</p>
+          <p><strong>Email: </strong>{{user.email}}</p>
+          <!-- <p><strong>Phone Number: </strong>{{user.mobile}}</p> -->
+        </div>
+        <div class="col-6">
+          <p><strong>SSN: </strong>{{user.ssn}}</p>
+          <p><strong>Phone Number: </strong>{{user.mobile}}</p>
+          <!-- <p><strong>Account Number:</strong>{{user.accountNumber}}</p>
+          <p><strong>IFSC Code:</strong>{{user.ifscCode}}</p> -->
+        </div>
+      </div>
+      <div class="d-flex" >
+        <div (click)="delete()" class="button mouse-pointer me-3">Delete</div>
+        <div (click)="transaction()" class="button mouse-pointer me-3">View Transaction</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container transaction-class" id ="myTran" #TABLE>
+
+  <!-- <button class="mt-2 btn btn-export btn-primary float-right" (click)="ExportTOExcel()">Export as Excel</button> -->
+  <table  mat-table #table  [dataSource]="transactions" multiTemplateDataRows matSort class="mat-elevation-z8 w-100">
+
+    <ng-container matColumnDef="createdOn">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.transactionDate | date}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="transactionId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Id </th>
+      <td mat-cell *matCellDef="let element">
+        <div><strong> {{element.id}}</strong></div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="orderId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Id </th>
+      <td mat-cell *matCellDef="let element"> {{element?.orderId}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="userType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> User Type </th>
+      <td mat-cell *matCellDef="let element"> Buyer </td>
+    </ng-container>
+
+    <ng-container matColumnDef="credit">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Credit </th>
+      <td mat-cell *matCellDef="let element">
+        <small [ngStyle]="{'color':element?.transactionStatus=='SUCCESS' ? 'green' : 'red' }">{{element.transactionType==='CREDIT' ? element.totalPrice: ''}}</small>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="debit">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Debit </th>
+      <td mat-cell *matCellDef="let element">
+        <small [ngStyle]="{'color':element?.transactionStatus=='SUCCESS' ? 'green' : 'red' }">{{element.transactionType==='DEBIT' ? element.totalPrice: ''}}</small>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+      <td mat-cell *matCellDef="let element">
+        <small [ngStyle]="{'color':element?.transactionStatus=='SUCCESS' ? 'green' : 'red' }">{{element?.transactionStatus}}</small>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+        <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <div *ngFor="let data of element.orders">
+            <div class="row p-3">
+              <div class="col-4 image-container d-flex"><img [src]="data.voucher.imageUrl" class="voucher-image img-fluid" alt="voucher image"></div>
+              <div class="col-4">
+                <p><strong>Voucher Id: </strong>{{data.voucher.id}}</p>
+                <p><strong>Title: </strong>{{data.voucher.title}}</p>
+                <p><strong>Selling Price: </strong>$ {{data.voucher.orderItemPrice}}</p>
+              </div>
+              <div class="col-4">
+                <p><strong>Voucher Code: </strong>{{data.voucher.voucherCode}}</p>
+                <!-- <p><strong>Posted on: </strong>{{data.credit}}</p> -->
+                <p><strong>Expiry  Date: </strong>{{data.voucher.expiryDate | date}}</p>
+                  <p ><strong>Is Negotiable: </strong>{{data.voucher.negotiable ? 'Yes': 'No'}}</p>
+              </div>
+            </div>
+            <hr>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr  mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element;expandedElementId=element.taskId">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  </table>
+  </div>
+
+  <app-loader *ngIf="isLoading"></app-loader>
+
+
+

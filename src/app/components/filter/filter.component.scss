@@ -1,0 +1,49 @@
+@import "../../scss/variables.scss";
+
+.ad {
+  // height: 20vh;
+  background: #CADAFF;
+  h4 {
+    color: #25282B;
+  }
+}
+
+.button {
+  padding: .5rem 2rem;
+  font-size: 0.875rem;
+}
+
+.search-container {
+  div {
+    color: #A0ABD9;
+    font-size: 1.25rem;
+  }
+}
+
+.searchbar{
+  background: #EFF2F9;
+  border-radius: 2rem;
+  border: none;
+  width: 50%;
+
+
+}
+
+.filter {
+  color:#071753;
+  font-size: 0.875rem;
+  border-bottom: .125rem solid transparent;
+  .active {
+    border-bottom: .125rem solid $primary-color;
+    color: $primary-color;
+
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .searchbar {
+    width: 100%;
+  }
+
+}

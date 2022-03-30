@@ -1,0 +1,25 @@
+<div class=" fixed-top">
+<div class="notification-container">
+
+  <h2 class="fw-bold p-3">Alerts</h2>
+
+    <div class="notification-card" *ngFor="let item of notifications"
+    [ngStyle]="{'background-color': item.isSeen ? 'none':'#EFF2FF'}">
+      <div
+      class="notification-card py-2 px-3" >
+      <strong>{{item.title}}</strong>
+      <p>{{item.description}}</p>
+      <div *ngIf="item.notificationType=='NEW_PRICE_QUOTED' && !item.isComplete" class="d-flex">
+        <div (click)="acceptQuotedPrice(item.voucherId,item.buyerId,item.id)"
+        class="button m-1">Accept</div>
+        <div (click)="rejectQuotedPrice(item.voucherId,item.buyerId,item.id)"
+        class="button m-1">Reject</div>
+      </div>
+      <p class="float-end small-font">{{item.createdDate?.slice(0,10)}}</p>
+    </div>
+      <hr class="w-100 m-0">
+    </div>
+    <app-no-data *ngIf="notifications.length==0"></app-no-data>
+  </div>
+
+</div>

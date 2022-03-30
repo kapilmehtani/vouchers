@@ -1,0 +1,28 @@
+.card {
+  box-shadow: 1.25rem 0.625rem 1.875rem rgba(0, 0, 0, 0.06);
+  border: none;
+  border-radius: 1rem;
+}
+
+.graph-container {
+    // height: 75%;
+    width: 85%;
+    margin: auto;
+    // canvas {
+    //   width: 75vw!important;
+    // }
+}
+
+.piechart-container{
+  width: 40%;
+  margin: auto;
+}
+
+
+.button {
+  margin-top: auto;
+  width: max-content;
+  height: max-content;
+  border-radius: 100%;
+  padding: .5rem;
+}

@@ -1,0 +1,34 @@
+<div class="container my-4">
+  <div class="row">
+    <div class="col-md-4">
+      <img class="img-fluid" [src]="voucher.companyImgUrl" alt="">
+    </div>
+    <div class="col-md-8 px-5">
+      <div class="d-flex  mb-3">
+        <h3 class="my-auto" title="Seller Name">{{voucher.seller.firstName+' '+voucher.seller.lastName}}</h3>
+        <img *ngIf="voucher.seller.ssnVerified" src="../../../assets/icons/verified.svg"
+        class="icon mx-2" alt="" title="Verified Seller">
+        </div>
+        <div class="rating-container d-flex my-3">
+          <img src="../../../assets/feather/star.svg" alt="" title="Seller Rating">{{sellerRating.sellerRating}}</div>
+
+      <!-- <p><strong>Quantity: </strong>{{voucher.quantity}}</p> -->
+
+      <div class="row mt-3">
+        <div class="col-6">
+          <p><strong>Title: </strong>{{voucher.title}}</p>
+          <p><strong>Selling Price: </strong>$ {{voucher.sellingPrice}}</p>
+          <p><strong>Voucher Amount: </strong>$ {{voucher.voucherValue}}</p>
+          <p><strong>Description: </strong>{{voucher.description}}</p>
+        </div>
+        <div class="col-6">
+          <p><strong>Posted on: </strong>{{voucher.createdOn |date}}</p>
+          <p><strong>Expiry  Date: </strong>{{voucher.expiryDate |date}}</p>
+            <p ><strong>Is Negotiable: </strong>{{voucher.negotiable ? 'Yes': 'No'}}</p>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
