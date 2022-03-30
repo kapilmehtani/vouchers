@@ -1,0 +1,99 @@
+stages:
+  - build_angular
+  - cloud_deploy
+
+cache:
+    paths:
+    - ./node_modules
+
+generate_artifact:
+ image: node:12-alpine
+ stage: build_angular
+ only:
+ - master
+ - dev
+ tags:
+  - frontend
+ script:
+  - npm install -g @angular/cli
+  - npm install
+  - CI=false npm run build
+ artifacts:
+  paths:
+    - dist/
+
+gcloud_deploy:
+  image: google/cloud-sdk:alpine
+  stage: cloud_deploy
+  dependencies:
+    - generate_artifact
+  environment: staging
+  only:
+  - master
+  - dev
+  tags:
+  - frontend
+  before_script:    
+  - "Servicename=vouchermoney-frontend"
+  - "echo $Servicename"
+  - "ServiceName=${Servicename//-}"
+  - "echo $ServiceName"
+  - "echo $CI_PROJECT_NAME"
+  - |
+    cat <<EOF >> app.yaml
+    runtime: python27
+    api_version: 1
+    threadsafe: yes
+    service: vouchermoney-frontend
+    instance_class: B1
+    manual_scaling:
+        instances: 1
+    handlers:
+     - url: /(.+\.js)
+       static_files: dist/voucher-money/\1
+       upload: dist/voucher-money/(.+\.js)
+     - url: /(.+\.css)
+       static_files: dist/voucher-money/\1
+       upload: dist/voucher-money/(.+\.css)
+     - url: /(.+\.png)
+       static_files: dist/voucher-money/\1
+       upload: dist/voucher-money/(.+\.png)
+     - url: /(.+\.jpg)
+       static_files: dist/voucher-money/\1
+       upload: dist/voucher-money/(.+\.jpg)
+     - url: /(.+\.svg)
+       static_files: dist/voucher-money/\1
+       upload: dist/voucher-money/(.+\.svg)
+     - url: /favicon.ico
+       static_files: dist/voucher-money/favicon.ico
+       upload: dist/voucher-money/favicon.ico
+     - url: /(.+\.json)
+       static_files: dist/voucher-money/\1
+       upload: dist/voucher-money/(.+\.json)
+     - url: /(.+)
+       static_files: dist/voucher-money/index.html
+       upload: dist/voucher-money/index.html
+     - url: /
+       static_files: dist/voucher-money/index.html
+       upload: dist/voucher-money/index.html
+
+    skip_files:
+      - e2e/
+      - node_modules/
+      - src/
+      - ^(./)?\..$
+      - ^(./)?.\.json$
+      - ^(./)?.\.md$
+      - ^(./)?.\.yaml$
+      - ^LICENSE
+    EOF
+  - "cat app.yaml"
+  - echo $SERVICE_ACC_KEY > ${CI_PIPELINE_ID}.json
+  - "cat $CI_PIPELINE_ID.json"
+  script:
+  - gcloud auth activate-service-account --key-file $CI_PIPELINE_ID.json
+  - gcloud --project  hu18-groupa-java app deploy --version v1 --appyaml app.yaml
+  - url=$(gcloud app services browse $ServiceName --no-launch-browser --project  hu18-groupa-java)
+  - echo $url
+  after_script:
+  - rm $CI_PIPELINE_ID.json
